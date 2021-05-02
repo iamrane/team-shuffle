@@ -1,4 +1,4 @@
-import {Button, FormControl, FormErrorMessage, FormLabel, Heading, Input, Select, Stack} from "@chakra-ui/react";
+import {Button, FormControl, FormErrorMessage, FormLabel, Heading, Input, Stack} from "@chakra-ui/react";
 import {Field, Form} from "formik";
 import {useRecoilState} from "recoil";
 import {AddIcon, ChevronLeftIcon} from "@chakra-ui/icons";
@@ -14,12 +14,13 @@ function validateName(value) {
     return error;
 }
 
-export default function PlayerForm({ onSubmit }) {
+export default function PlayerForm() {
     const [, setView] = useRecoilState(viewState);
     return (
         <Form>
             <Stack spacing={4}>
                 <Button
+                    size="lg"
                     w="100px"
                     leftIcon={<ChevronLeftIcon />}
                     onClick={() => setView('configuration')}
@@ -41,7 +42,7 @@ export default function PlayerForm({ onSubmit }) {
                     </Field>
                 </Stack>
 
-                <Button type="submit" leftIcon={<AddIcon />}>Add</Button>
+                <Button size="lg" type="submit" leftIcon={<AddIcon />}>Add</Button>
             </Stack>
         </Form>
     );

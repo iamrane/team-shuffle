@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import Head from 'next/head'
 import {Formik} from "formik";
 import {useRecoilState} from "recoil";
@@ -40,7 +39,7 @@ export default function Home() {
             {view === 'configuration' && (
                 <Stack spacing={10}>
                     <ConfigurationForm />
-                    <Button onClick={() => setView('players')}>
+                    <Button size="lg" onClick={() => setView('players')}>
                         Next
                     </Button>
                 </Stack>
@@ -66,6 +65,7 @@ export default function Home() {
                     {players?.[0] && <Players players={players} />}
                     {players?.[3] && (
                         <Button
+                            size="lg"
                             onClick={() => {
                                 handleGenerateTeams();
                                 setView('teams');
@@ -82,6 +82,7 @@ export default function Home() {
                 <Stack spacing={10}>
                     <Teams teams={teams} bench={bench} />
                     <Button
+                        size="lg"
                         onClick={handleGenerateTeams}
                         leftIcon={<RepeatIcon />}
                     >
