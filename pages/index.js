@@ -27,7 +27,7 @@ export default function Home() {
     }
 
     return (
-        <Container maxW="lg" py={4} mt="50px">
+        <Container maxW="lg" py={4} mt="60px">
             <Head>
                 <title>Dela lag</title>
                 <meta name="description" content="Ett app för att enkelt kunna dela lag" />
