@@ -14,7 +14,7 @@ export default function Teams() {
         <Stack spacing={4}>
             <Button
                 size="lg"
-                w="100px"
+                alignSelf="start"
                 leftIcon={<ChevronLeftIcon />}
                 onClick={() => setView('players')}
             >
