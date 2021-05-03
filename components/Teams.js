@@ -1,17 +1,31 @@
+import { Fragment, useEffect } from 'react';
+import {useRouter} from "next/router";
 import {Grid, Heading, Box, Stack, Text, Divider, Button} from "@chakra-ui/react";
 import Bench from './Bench';
 import PlayerAvatar from "./PlayerAvatar";
 import {ChevronLeftIcon, RepeatIcon} from "@chakra-ui/icons";
-import {useRecoilState} from "recoil";
-import { playersState, nrOfPlayersPerTeamState, benchState, teamsState, viewState} from "../states";
+import {useRecoilState, useRecoilValue} from "recoil";
+import { playersState, nrOfPlayersPerTeamState, benchState, teamsState} from "../states";
 import {splitTeams} from "../utils";
 
 export default function Teams() {
-    const [, setView] = useRecoilState(viewState);
-    const [players] = useRecoilState(playersState);
-    const [nrOfPlayersPerTeam] = useRecoilState(nrOfPlayersPerTeamState);
+    const router = useRouter();
+    const players = useRecoilValue(playersState);
+    const nrOfPlayersPerTeam = useRecoilValue(nrOfPlayersPerTeamState);
     const [teams, setTeams] = useRecoilState(teamsState);
     const [bench, setBench] = useRecoilState(benchState);
+
+    function shuffle() {
+        const [newTeams, newBench] = splitTeams(players, nrOfPlayersPerTeam);
+        setTeams(newTeams);
+        setBench(newBench);
+    }
+
+    useEffect(() => {
+        if (!teams?.[0]) {
+          shuffle();
+        }
+    }, []);
 
     return (
         <Stack spacing={10}>
@@ -20,9 +34,9 @@ export default function Teams() {
                     size="lg"
                     alignSelf="start"
                     leftIcon={<ChevronLeftIcon />}
-                    onClick={() => setView('players')}
+                    onClick={() => router.push('/')}
                 >
-                    Go back
+                    Add more players
                 </Button>
                 <Heading size="md">Teams</Heading>
                 {bench?.[0] && (
@@ -36,14 +50,13 @@ export default function Teams() {
                         <Heading size="sm" mb={6}>Team {index + 1}</Heading>
                         <Stack spacing={4}>
                             {team.map((player, index) => (
-                                <>
+                                <Fragment key={`player-${index}`}>
                                     <Grid templateColumns="50px 1fr" alignItems="center" gap={3}>
                                         <PlayerAvatar key={player?.name} player={player} size="md" />
                                         <Text>{player?.name}</Text>
                                     </Grid>
                                     {team.length !== index + 1 && <Divider /> }
-
-                                </>
+                                </Fragment>
                             ))}
                         </Stack>
                     </Box>
@@ -51,11 +64,7 @@ export default function Teams() {
             </Stack>
             <Button
                 size="lg"
-                onClick={() => {
-                    const [newTeams, newBench] = splitTeams(players, nrOfPlayersPerTeam);
-                    setTeams(newTeams);
-                    setBench(newBench);
-                }}
+                onClick={shuffle}
                 leftIcon={<RepeatIcon />}
             >
                 Shuffle teams

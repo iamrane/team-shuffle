@@ -1561,7 +1561,7 @@ formik@^2.2.6:
     tiny-warning "^1.0.2"
     tslib "^1.10.0"
 
-framer-motion@^4:
+framer-motion@^4.1.11:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-4.1.11.tgz#022fdfe899bf644cab8d0f33ee35156e2d036391"
   integrity sha512-7N67I8PUNH3OT0RTlNB672k5UiuWg5B17c+9Lc6BjICRo66gKeiq/Hy091lWCqNuSLEO59F9z39zxb3wMg6Tjg==
@@ -2509,6 +2509,11 @@ readdirp@~3.5.0:
   integrity sha512-cMhu7c/8rdhkHXWsY+osBhfSy0JikwpHK/5+imo+LpeasTF8ouErHrlYkwT0++njiyuDvc7OFY5T3ukvZ8qmFQ==
   dependencies:
     picomatch "^2.2.1"
+
+recoil-persist@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/recoil-persist/-/recoil-persist-2.5.0.tgz#9062cce444a5d8489ba6f99b353c9aa4e568e73f"
+  integrity sha512-Mn7jsDHRch/NIJOtvj9ESLVvS2X0DV6J7fXizdJF+8Jnrk8+WJGOFKD7QP30OyuJPz4CAVpfLkA+vTKLl1BxbA==
 
 recoil@^0.2.0:
   version "0.2.0"

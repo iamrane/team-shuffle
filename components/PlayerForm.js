@@ -1,10 +1,10 @@
 import {Button, FormControl, FormErrorMessage, FormLabel, Heading, Input, Stack} from "@chakra-ui/react";
 import {Field, Form, Formik} from "formik";
 import {useRecoilState} from "recoil";
-import {AddIcon, RepeatIcon} from "@chakra-ui/icons";
-import {viewState, playersState, teamsState, benchState, nrOfPlayersPerTeamState} from '../states';
+import { useRouter } from 'next/router'
+import {AddIcon} from "@chakra-ui/icons";
+import {playersState} from '../states';
 import Players from "./Players";
-import {splitTeams} from "../utils";
 
 function validateName(value) {
     let error
@@ -17,11 +17,8 @@ function validateName(value) {
 }
 
 export default function PlayerForm() {
-    const [, setView] = useRecoilState(viewState);
+    const router = useRouter();
     const [players, setPlayers] = useRecoilState(playersState);
-    const [, setTeams] = useRecoilState(teamsState);
-    const [, setBench] = useRecoilState(benchState);
-    const [nrOfPlayersPerTeam] = useRecoilState(nrOfPlayersPerTeamState);
 
     return (
         <Stack spacing={6}>
@@ -65,14 +62,10 @@ export default function PlayerForm() {
                 <Button
                     size="lg"
                     onClick={() => {
-                        const [newTeams, newBench] = splitTeams(players, nrOfPlayersPerTeam);
-                        setTeams(newTeams);
-                        setBench(newBench);
-                        setView('teams');
+                        router.push('/teams');
                     }}
-                    leftIcon={<RepeatIcon />}
                 >
-                    Generate teams
+                    Next
                 </Button>
             )}
         </Stack>
