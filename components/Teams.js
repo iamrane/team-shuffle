@@ -33,14 +33,14 @@ export default function Teams() {
                 {!isEmptyArray(bench) && (
                     <Box p={4} borderWidth="1px" borderRadius="lg" overflow="hidden">
                         <Heading size="sm" mb={6}>Bench</Heading>
-                        <PlayerGroup group={bench} editable />
+                        <PlayerGroup group={bench} />
                     </Box>
                 )}
 
                 {teams.map((team, index) => (
                     <Box p={4} borderWidth="1px" borderRadius="lg" overflow="hidden" key={`team-${index}`}>
                         <Heading size="sm" mb={6}>Team {index + 1}</Heading>
-                        <PlayerGroup group={team} editable />
+                        <PlayerGroup group={team} />
                     </Box>
                 ))}
             </Stack>
