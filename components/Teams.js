@@ -4,7 +4,7 @@ import {Heading, Box, Stack, Button} from "@chakra-ui/react";
 import {ChevronLeftIcon, RepeatIcon} from "@chakra-ui/icons";
 import {useRecoilValue} from "recoil";
 import { benchState, teamsState} from "../states";
-import {useShuffle} from "../utils";
+import {useShuffle, isEmptyArray} from "../utils";
 import PlayerGroup from "./PlayerGroup";
 
 export default function Teams() {
@@ -30,7 +30,7 @@ export default function Teams() {
                 </Button>
                 <Heading size="md">Teams</Heading>
 
-                {bench?.[0] && (
+                {!isEmptyArray(bench) && (
                     <Box p={4} borderWidth="1px" borderRadius="lg" overflow="hidden">
                         <Heading size="sm" mb={6}>Bench</Heading>
                         <PlayerGroup group={bench} />
@@ -38,7 +38,7 @@ export default function Teams() {
                 )}
 
                 {teams.map((team, index) => (
-                    <Box key={`team-${index}`} p={4} borderWidth="1px" borderRadius="lg" overflow="hidden">
+                    <Box p={4} borderWidth="1px" borderRadius="lg" overflow="hidden" key={`team-${index}`}>
                         <Heading size="sm" mb={6}>Team {index + 1}</Heading>
                         <PlayerGroup group={team} />
                     </Box>

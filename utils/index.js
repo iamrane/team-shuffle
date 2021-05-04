@@ -44,3 +44,7 @@ export function useShuffle() {
         return [teams, bench];
     }, [players, nrOfPlayersPerTeam]);
 }
+
+export function isEmptyArray(array) {
+    return !array?.[0];
+}
