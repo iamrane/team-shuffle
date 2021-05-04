@@ -26,7 +26,7 @@ export default function Teams() {
                     leftIcon={<ChevronLeftIcon />}
                     onClick={() => router.push('/')}
                 >
-                    Add more players
+                    Players
                 </Button>
                 <Heading size="md">Teams</Heading>
 

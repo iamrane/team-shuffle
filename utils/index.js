@@ -1,6 +1,6 @@
 import {useCallback} from "react";
 import {useRecoilValue, useSetRecoilState} from "recoil";
-import {benchState, nrOfPlayersPerTeamState, playersState, teamsState} from "../states";
+import {benchState, configurationState, playersState, teamsState} from "../states";
 
 function shuffle(array) {
     let currentIndex = array.length;
@@ -33,16 +33,16 @@ function splitTeams(players, nrOfPlayersPerTeam) {
 
 export function useShuffle() {
     const players = useRecoilValue(playersState);
-    const nrOfPlayersPerTeam = useRecoilValue(nrOfPlayersPerTeamState);
+    const configuration = useRecoilValue(configurationState);
     const setTeams = useSetRecoilState(teamsState);
     const setBench = useSetRecoilState(benchState);
 
     return useCallback(() => {
-        const [teams, bench] = splitTeams(players, nrOfPlayersPerTeam);
+        const [teams, bench] = splitTeams(players, parseInt(configuration.nrOfPlayersPerTeam, 10));
         setTeams(teams);
         setBench(bench);
         return [teams, bench];
-    }, [players, nrOfPlayersPerTeam]);
+    }, [players, configuration]);
 }
 
 export function isEmptyArray(array) {

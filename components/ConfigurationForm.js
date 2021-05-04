@@ -1,22 +1,21 @@
 import {useRouter} from "next/router";
-import {Box, Button, FormLabel, Heading, Select, Stack} from "@chakra-ui/react";
+import {Box, Button, FormLabel, Heading, Stack, FormControl, Switch, Select} from "@chakra-ui/react";
 import {useRecoilState} from "recoil";
 import {Field, Form, Formik} from "formik";
-import {nrOfPlayersPerTeamState} from '../states';
+import {configurationState} from '../states';
 
 export default function ConfigurationForm() {
     const router = useRouter();
-    const [nrOfPlayersPerTeam, setNrOfPlayersPerTeam] = useRecoilState(nrOfPlayersPerTeamState);
+    const [configuration, setConfiguration] = useRecoilState(configurationState);
 
     return (
         <Formik
             onSubmit={values => {
-                setNrOfPlayersPerTeam(parseInt(values?.nrOfPlayersPerTeam, 10));
+                console.log('values', values);
+                setConfiguration(values);
                 router.back();
             }}
-            initialValues={{
-                nrOfPlayersPerTeam,
-            }}
+            initialValues={configuration}
         >
             {() => (
                 <Form>
@@ -26,15 +25,25 @@ export default function ConfigurationForm() {
                             <Stack spacing={4}>
                                 <Field name="nrOfPlayersPerTeam">
                                     {({ field }) => (
-                                        <>
-                                            <FormLabel htmlFor="nrOfPlayersPerTeam">Number of player per team</FormLabel>
+                                        <FormControl>
+                                            <FormLabel htmlFor="nrOfPlayersPerTeam" mb={2}>Number of player per team</FormLabel>
                                             <Select id="nrOfPlayersPerTeam" {...field}>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
                                                 <option value="4">4</option>
                                                 <option value="5">5</option>
                                             </Select>
-                                        </>
+                                        </FormControl>
+                                    )}
+                                </Field>
+                                <Field name="useLevels">
+                                    {({ field }) => (
+                                        <FormControl display="flex" alignItems="center">
+                                            <FormLabel htmlFor="useLevels" mb="0">
+                                                Use level on players?
+                                            </FormLabel>
+                                            <Switch {...field} isChecked={field?.value} id="useLevels" />
+                                        </FormControl>
                                     )}
                                 </Field>
                             </Stack>

@@ -3,9 +3,12 @@ import { recoilPersist } from 'recoil-persist'
 
 const { persistAtom } = recoilPersist();
 
-export const nrOfPlayersPerTeamState = atom({
-    key: 'nrOfPlayersPerTeamState',
-    default: 2,
+export const configurationState = atom({
+    key: 'configurationState',
+    default: {
+        useLevels: false,
+        nrOfPlayersPerTeam: '2',
+    },
     effects_UNSTABLE: [persistAtom],
 });
 

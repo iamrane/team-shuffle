@@ -2,20 +2,20 @@ import {Box, Center, Heading, IconButton, Container} from "@chakra-ui/react";
 import { useResetRecoilState } from 'recoil';
 import { SettingsIcon, DeleteIcon } from "@chakra-ui/icons";
 import {useRouter} from "next/router";
-import { teamsState, benchState, playersState, nrOfPlayersPerTeamState } from "../states";
+import { teamsState, benchState, playersState, configurationState } from "../states";
 
 export default function Top() {
     const router = useRouter();
     const resetTeams = useResetRecoilState(teamsState);
     const resetBench = useResetRecoilState(benchState);
     const resetPlayers = useResetRecoilState(playersState);
-    const resetNrOfPlayersPerTeamState = useResetRecoilState(nrOfPlayersPerTeamState);
+    const resetConfiguration = useResetRecoilState(configurationState);
 
     function reset() {
         resetTeams();
         resetBench();
         resetPlayers();
-        resetNrOfPlayersPerTeamState();
+        resetConfiguration();
     }
 
     return (

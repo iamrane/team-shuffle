@@ -1,14 +1,15 @@
-import {Box, Button, FormControl, FormErrorMessage, FormLabel, Heading, Input, Stack} from "@chakra-ui/react";
+import {Box, Button, FormControl, FormErrorMessage, FormLabel, Heading, Input, Select, Stack} from "@chakra-ui/react";
 import {Field, Form, Formik} from "formik";
-import {useRecoilState} from "recoil";
+import {useRecoilState, useRecoilValue} from "recoil";
 import { useRouter } from 'next/router'
-import {AddIcon} from "@chakra-ui/icons";
-import {playersState} from '../states';
+import {AddIcon, ChevronRightIcon} from "@chakra-ui/icons";
+import {playersState, configurationState} from '../states';
 import PlayerGroup from "./PlayerGroup";
 
 export default function PlayerForm() {
     const router = useRouter();
     const [players, setPlayers] = useRecoilState(playersState);
+    const configuration = useRecoilValue(configurationState);
 
     function validateName(value) {
         let error
@@ -55,6 +56,23 @@ export default function PlayerForm() {
                                         </FormControl>
                                     )}
                                 </Field>
+                                {configuration.useLevels && (
+                                    <Field name="level">
+                                        {({ field }) => (
+                                            <FormControl>
+                                                <FormLabel htmlFor="level">Players level</FormLabel>
+                                                <Select {...field}>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                </Select>
+                                            </FormControl>
+                                        )}
+                                    </Field>
+                                )}
+
                             </Stack>
 
                             <Button size="lg" type="submit" leftIcon={<AddIcon />}>Add</Button>
@@ -70,12 +88,13 @@ export default function PlayerForm() {
             )}
             {players?.[3] && (
                 <Button
+                    rightIcon={<ChevronRightIcon />}
                     size="lg"
                     onClick={() => {
                         router.push('/teams');
                     }}
                 >
-                    Next
+                    Teams
                 </Button>
             )}
         </Stack>
