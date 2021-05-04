@@ -1,38 +1,43 @@
-import {Button, FormControl, FormErrorMessage, FormLabel, Heading, Input, Stack} from "@chakra-ui/react";
+import {Box, Button, FormControl, FormErrorMessage, FormLabel, Heading, Input, Stack} from "@chakra-ui/react";
 import {Field, Form, Formik} from "formik";
 import {useRecoilState} from "recoil";
 import { useRouter } from 'next/router'
 import {AddIcon} from "@chakra-ui/icons";
 import {playersState} from '../states';
-import Players from "./Players";
-
-function validateName(value) {
-    let error
-
-    if (!value) {
-        error = "Name is required"
-    }
-
-    return error;
-}
+import PlayerGroup from "./PlayerGroup";
 
 export default function PlayerForm() {
     const router = useRouter();
     const [players, setPlayers] = useRecoilState(playersState);
 
+    function validateName(value) {
+        let error
+
+        if (!value) {
+            error = "Name is required"
+        }
+
+        if (players.find(p => p.name === value)) {
+            error = "Name already exists"
+        }
+
+        return error;
+    }
+
+
     return (
         <Stack spacing={6}>
             <Formik
                 validateOnBlur={false}
+                initialValues={{
+                    name: '',
+                    level: '3',
+                }}
                 onSubmit={(values, actions) => {
                     const name = values?.name;
                     const level = values?.level;
                     setPlayers([...players, { name, level }]);
                     actions.resetForm();
-                }}
-                initialValues={{
-                    name: '',
-                    level: '3',
                 }}
             >
                 {() => (
@@ -57,7 +62,12 @@ export default function PlayerForm() {
                     </Form>
                 )}
             </Formik>
-            {players?.[0] && <Players players={players} />}
+            {players?.[0] && (
+                <Box p={4} borderWidth="1px" borderRadius="lg" overflow="hidden">
+                    <Heading size="sm" mb={6}>Players</Heading>
+                    <PlayerGroup group={players} editable />
+                </Box>
+            )}
             {players?.[3] && (
                 <Button
                     size="lg"

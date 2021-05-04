@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 import {useRouter} from "next/router";
 import {Heading, Box, Stack, Button} from "@chakra-ui/react";
 import {ChevronLeftIcon, RepeatIcon} from "@chakra-ui/icons";
@@ -33,14 +33,14 @@ export default function Teams() {
                 {!isEmptyArray(bench) && (
                     <Box p={4} borderWidth="1px" borderRadius="lg" overflow="hidden">
                         <Heading size="sm" mb={6}>Bench</Heading>
-                        <PlayerGroup group={bench} />
+                        <PlayerGroup group={bench} editable />
                     </Box>
                 )}
 
                 {teams.map((team, index) => (
                     <Box p={4} borderWidth="1px" borderRadius="lg" overflow="hidden" key={`team-${index}`}>
                         <Heading size="sm" mb={6}>Team {index + 1}</Heading>
-                        <PlayerGroup group={team} />
+                        <PlayerGroup group={team} editable />
                     </Box>
                 ))}
             </Stack>
