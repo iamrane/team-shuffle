@@ -4,27 +4,18 @@ import {Grid, Heading, Box, Stack, Text, Divider, Button} from "@chakra-ui/react
 import Bench from './Bench';
 import PlayerAvatar from "./PlayerAvatar";
 import {ChevronLeftIcon, RepeatIcon} from "@chakra-ui/icons";
-import {useRecoilState, useRecoilValue} from "recoil";
-import { playersState, nrOfPlayersPerTeamState, benchState, teamsState} from "../states";
-import {splitTeams} from "../utils";
+import {useRecoilValue} from "recoil";
+import { benchState, teamsState} from "../states";
+import {useShuffle} from "../utils";
 
 export default function Teams() {
+    const shuffle = useShuffle();
     const router = useRouter();
-    const players = useRecoilValue(playersState);
-    const nrOfPlayersPerTeam = useRecoilValue(nrOfPlayersPerTeamState);
-    const [teams, setTeams] = useRecoilState(teamsState);
-    const [bench, setBench] = useRecoilState(benchState);
-
-    function shuffle() {
-        const [newTeams, newBench] = splitTeams(players, nrOfPlayersPerTeam);
-        setTeams(newTeams);
-        setBench(newBench);
-    }
+    const teams = useRecoilValue(teamsState);
+    const bench = useRecoilValue(benchState);
 
     useEffect(() => {
-        if (!teams?.[0]) {
-          shuffle();
-        }
+        shuffle();
     }, []);
 
     return (
@@ -41,7 +32,7 @@ export default function Teams() {
                 <Heading size="md">Teams</Heading>
                 {bench?.[0] && (
                     <Box mb={6}>
-                        <Bench bench={bench} />
+                        <Bench />
                     </Box>
                 )}
 

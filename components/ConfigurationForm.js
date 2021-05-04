@@ -1,34 +1,19 @@
 import {useRouter} from "next/router";
 import {Box, Button, FormLabel, Heading, Select, Stack} from "@chakra-ui/react";
-import {useRecoilState, useSetRecoilState, useRecoilValue} from "recoil";
+import {useRecoilState} from "recoil";
 import {Field, Form, Formik} from "formik";
-import {nrOfPlayersPerTeamState, teamsState, playersState, benchState} from '../states';
-import {splitTeams} from "../utils";
+import {nrOfPlayersPerTeamState} from '../states';
 
 export default function ConfigurationForm() {
     const router = useRouter();
-    const players = useRecoilValue(playersState);
     const [nrOfPlayersPerTeam, setNrOfPlayersPerTeam] = useRecoilState(nrOfPlayersPerTeamState);
-    const setTeams = useSetRecoilState(teamsState);
-    const setBench = useSetRecoilState(benchState);
-
-    function handleSave(values) {
-        const newNrOfPlayersTeam = parseInt(values?.nrOfPlayersPerTeam, 10);
-        setNrOfPlayersPerTeam(newNrOfPlayersTeam);
-        const [newTeams, newBench] = splitTeams(players, newNrOfPlayersTeam);
-        setTeams(newTeams);
-        setBench(newBench);
-
-        if (newTeams?.length?.[0]) {
-            router.push('/');
-        }
-
-        router.back();
-    }
 
     return (
         <Formik
-            onSubmit={handleSave}
+            onSubmit={values => {
+                setNrOfPlayersPerTeam(parseInt(values?.nrOfPlayersPerTeam, 10));
+                router.back();
+            }}
             initialValues={{
                 nrOfPlayersPerTeam,
             }}

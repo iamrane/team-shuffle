@@ -1,4 +1,8 @@
-export function shuffle(array) {
+import {useCallback} from "react";
+import {useRecoilValue, useSetRecoilState} from "recoil";
+import {benchState, nrOfPlayersPerTeamState, playersState, teamsState} from "../states";
+
+function shuffle(array) {
     let currentIndex = array.length;
     let temporaryValue;
     let randomIndex;
@@ -14,7 +18,7 @@ export function shuffle(array) {
     return array;
 }
 
-export function splitTeams(players, nrOfPlayersPerTeam) {
+function splitTeams(players, nrOfPlayersPerTeam) {
     const teams = [];
     let nrOfTeams = Math.floor(players.length / nrOfPlayersPerTeam);
     let bench = shuffle([...players]);
@@ -25,4 +29,18 @@ export function splitTeams(players, nrOfPlayersPerTeam) {
     }
 
     return [ teams, bench ];
+}
+
+export function useShuffle() {
+    const players = useRecoilValue(playersState);
+    const nrOfPlayersPerTeam = useRecoilValue(nrOfPlayersPerTeamState);
+    const setTeams = useSetRecoilState(teamsState);
+    const setBench = useSetRecoilState(benchState);
+
+    return useCallback(() => {
+        const [teams, bench] = splitTeams(players, nrOfPlayersPerTeam);
+        setTeams(teams);
+        setBench(bench);
+        return [teams, bench];
+    }, [players, nrOfPlayersPerTeam]);
 }
