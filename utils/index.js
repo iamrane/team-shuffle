@@ -54,19 +54,28 @@ function splitTeams(players, configuration) {
     let teams = []
 
     if (useLevels) {
+        // Create all teams before hand
         teams = Array.from(Array(nrOfTeams), () => []);
+
+        // Sort bench so the best are in the top
         bench.sort((a, b) => b.level - a.level);
         while (nrOfTeams > 0 && bench.length) {
+            // Sort team so the team with the lowest total score is in the top
             teams.sort(teamsSort(nrOfPlayersPerTeam));
+            // Get a random index from all teams with the same score as the team with the lowest score
             const randomIndex = getRandomIndex(teams);
+            // Place the best player in that team
             teams[randomIndex].push(bench.shift());
+            //If that team is full, reduce it with one.
             if (teams[randomIndex]?.length === nrOfPlayersPerTeam) {
                 nrOfTeams -= 1;
             }
         }
     } else {
+        // Shuffle the bench
         bench = shuffle(bench);
         while (nrOfTeams > 0 && bench.length) {
+            // Place as many players from the bench into each team
             teams.push(bench.splice(0, nrOfPlayersPerTeam))
             nrOfTeams += 1;
         }
