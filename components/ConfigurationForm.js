@@ -11,7 +11,6 @@ export default function ConfigurationForm() {
     return (
         <Formik
             onSubmit={values => {
-                console.log('values', values);
                 setConfiguration(values);
                 router.back();
             }}
