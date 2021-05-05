@@ -34,6 +34,18 @@ function teamsSort(nrOfPlayersPerTeam) {
     }
 }
 
+function getRandomIndex(teams) {
+    const targetSum = teamSum(teams[0]);
+    const indexesToChooseFrom = teams.reduce((acc, team, index) => {
+        if (targetSum === teamSum(team)) {
+            return [...acc, index];
+        }
+        return acc;
+    }, []);
+
+    return indexesToChooseFrom[Math.floor(Math.random() * indexesToChooseFrom.length)];
+}
+
 function splitTeams(players, configuration) {
     const nrOfPlayersPerTeam = parseInt(configuration.nrOfPlayersPerTeam, 10);
     const useLevels = configuration?.useLevels;
@@ -46,9 +58,9 @@ function splitTeams(players, configuration) {
         bench.sort((a, b) => b.level - a.level);
         while (nrOfTeams > 0 && bench.length) {
             teams.sort(teamsSort(nrOfPlayersPerTeam));
-            teams[0].push(bench.shift());
-
-            if (teams[0]?.length === nrOfPlayersPerTeam) {
+            const randomIndex = getRandomIndex(teams);
+            teams[randomIndex].push(bench.shift());
+            if (teams[randomIndex]?.length === nrOfPlayersPerTeam) {
                 nrOfTeams -= 1;
             }
         }
