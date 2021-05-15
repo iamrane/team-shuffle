@@ -19,7 +19,7 @@ export default function Top() {
     }
 
     return (
-        <Box zIndex={1} pos="fixed" top={0} left={0} bg="gray.700" w="100%" h="60px" boxShadow="base">
+        <Box zIndex={1} pos="fixed" top={0} left={0} bg="brand.200" w="100%" h="60px" boxShadow="base">
             <Container pos="relative" maxW="lg">
                 <Center pos="absolute" top={0} left={0} h="60px" px={4}>
                     <IconButton size="lg" onClick={() => router.push('/configuration')} aria-label="Settings" icon={<SettingsIcon />} />

@@ -47,7 +47,7 @@ export default function ConfigurationForm() {
                                 </Field>
                             </Stack>
                         </Box>
-                        <Button type="submit" size="lg">
+                        <Button colorScheme="cta" type="submit" size="lg">
                             Save
                         </Button>
                     </Stack>

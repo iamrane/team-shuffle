@@ -1,7 +1,9 @@
-import {Fragment, useState} from "react";
+import {useState} from "react";
 import {useRecoilState, useRecoilValue} from "recoil";
 import {Field, Form, Formik} from "formik";
+import {AnimatePresence, motion} from 'framer-motion';
 import {
+    Box,
     Button,
     Divider,
     FormControl,
@@ -15,6 +17,23 @@ import {
 import {DeleteIcon, EditIcon} from "@chakra-ui/icons";
 import PlayerAvatar from "./PlayerAvatar";
 import {benchState, configurationState, playersState, teamsState} from "../states";
+
+const itemVariants = {
+    hidden: (i) => ({
+        opacity: 0,
+        y: 36,
+        transition: {
+            delay: i * 0.1,
+        }
+    }),
+    visible: (i) => ({
+        opacity: 1,
+        y: 0,
+        transition: {
+            delay: i * 0.1,
+        }
+    }),
+}
 
 export default function PlayerGroup({ group, editable }) {
     const [players, setPlayers] = useRecoilState(playersState);
@@ -48,7 +67,13 @@ export default function PlayerGroup({ group, editable }) {
     return (
         <Stack spacing={4}>
             {group.map((player, index) => (
-                <Fragment key={`player-${index}`}>
+                <motion.div
+                    key={player?.name}
+                    variants={itemVariants}
+                    initial="hidden"
+                    animate="visible"
+                    custom={index}
+                >
                     {inEdit?.name === player?.name ? (
                         <Formik
                             validateOnBlur={false}
@@ -92,31 +117,33 @@ export default function PlayerGroup({ group, editable }) {
                                             </Stack>
                                         </GridItem>
                                         <GridItem>
-                                            <Button isFullWidth type="submit">Save</Button>
+                                            <Button colorScheme="cta" isFullWidth type="submit">Save</Button>
                                         </GridItem>
                                         <GridItem>
-                                            <Button variant="outline" isFullWidth onClick={() => setInEdit(false)}>Cancel</Button>
+                                            <Button colorScheme="cta" variant="outline" isFullWidth onClick={() => setInEdit(false)}>Cancel</Button>
                                         </GridItem>
                                     </Grid>
                                 </Form>
                             )}
                         </Formik>
                     ) : (
-                        <Grid templateColumns="1fr auto" alignItems="center" gap={3}>
-                            <Grid templateColumns="50px 1fr" alignItems="center" gap={3}>
-                                <PlayerAvatar key={player?.name} player={player} size="md" />
-                                <Text>{player?.name}</Text>
+                        <motion.div layoutId={player?.name}>
+                            <Grid templateColumns="1fr auto" alignItems="center" gap={3}>
+                                <Grid templateColumns="50px 1fr" alignItems="center" gap={3}>
+                                    <PlayerAvatar key={player?.name} player={player} size="md" />
+                                    <Text>{player?.name}</Text>
+                                </Grid>
+                                {editable && (
+                                    <Stack direction="row" wrap="nowrap" spacing={4}>
+                                        <IconButton aria-label="Edit" icon={<EditIcon />} onClick={() => setInEdit(player)}/>
+                                        <IconButton aria-label="Delete" icon={<DeleteIcon />} onClick={deletePlayer(player)} />
+                                    </Stack>
+                                )}
                             </Grid>
-                            {editable && (
-                                <Stack direction="row" wrap="nowrap" spacing={4}>
-                                    <IconButton aria-label="Edit" icon={<EditIcon />} onClick={() => setInEdit(player)}/>
-                                    <IconButton aria-label="Delete" icon={<DeleteIcon />} onClick={deletePlayer(player)} />
-                                </Stack>
-                            )}
-                        </Grid>
+                        </motion.div>
                     )}
-                    {group.length !== index + 1 && <Divider /> }
-                </Fragment>
+                    {group.length !== index + 1 && <Divider mt={4} /> }
+                </motion.div>
             ))}
         </Stack>
     )

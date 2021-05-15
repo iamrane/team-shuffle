@@ -75,7 +75,7 @@ export default function PlayerForm() {
 
                             </Stack>
 
-                            <Button size="lg" type="submit" leftIcon={<AddIcon />}>Add</Button>
+                            <Button colorScheme="cta" size="lg" type="submit" leftIcon={<AddIcon />}>Add</Button>
                         </Stack>
                     </Form>
                 )}
@@ -88,6 +88,7 @@ export default function PlayerForm() {
             )}
             {players?.[3] && (
                 <Button
+                    colorScheme="cta"
                     rightIcon={<ChevronRightIcon />}
                     size="lg"
                     onClick={() => {
