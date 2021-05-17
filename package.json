@@ -5,7 +5,19 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "eslint --fix .",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "./**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ]
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.0.12",
@@ -13,9 +25,18 @@
     "@chakra-ui/theme-tools": "^1.1.7",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
     "formik": "^2.2.6",
     "framer-motion": "^4.1.11",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
     "next": "10.2.0",
+    "prettier": "^2.3.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "recoil": "^0.2.0",
