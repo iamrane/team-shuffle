@@ -80,12 +80,19 @@ export default function PlayerForm() {
 					</Form>
 				)}
 			</Formik>
-			{players?.[0] && (
+			{players?.[0] ? (
 				<Box p={4} borderWidth="1px" borderRadius="lg" overflow="hidden">
 					<Heading size="sm" mb={6}>
 						Players
 					</Heading>
 					<PlayerGroup group={players} editable />
+				</Box>
+			) : (
+				<Box>
+					<Heading size="sm" mb={2}>
+						Add players
+					</Heading>
+					<p>Enter name of the players that will be enjoying this game</p>
 				</Box>
 			)}
 			{players?.[3] && (
