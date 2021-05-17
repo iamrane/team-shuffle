@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }) {
 	return (
 		<>
 			<Box position="fixed" w="100%" h="100%" opacity={opacity}>
-				<Image src="/padel-background-mobile.jpeg" layout="fill" objectFit="cover" />
+				<Image src="/padel-background.webp" layout="fill" objectFit="cover" />
 			</Box>
 			<Top />
 			<Container maxW="lg" h="100%" py={4} mt="60px" position="relative">

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { teamsState, benchState, playersState, useLevelsState, nrOfPlayersPerTeamState } from '../states';
 
 export default function Top() {
-	const bg = useColorModeValue('whiteAlpha.500', 'blackAlpha.500');
+	const bg = useColorModeValue('whiteAlpha.800', 'blackAlpha.800');
 	const router = useRouter();
 	const resetTeams = useResetRecoilState(teamsState);
 	const resetBench = useResetRecoilState(benchState);
@@ -26,7 +26,6 @@ export default function Top() {
 			<Container pos="relative" maxW="lg">
 				<Center pos="absolute" top={0} left={0} h="60px" px={4}>
 					<IconButton
-						colorScheme="secondary"
 						size="lg"
 						onClick={() => router.push('/configuration')}
 						aria-label="Settings"
@@ -34,16 +33,10 @@ export default function Top() {
 					/>
 				</Center>
 				<Center h="60px" w="100%">
-					<Heading size="lg">Team Shuffle</Heading>
+					<Heading size="lg">Delalag</Heading>
 				</Center>
 				<Center pos="absolute" top={0} right={0} h="60px" px={4}>
-					<IconButton
-						colorScheme="secondary"
-						size="lg"
-						onClick={reset}
-						aria-label="Settings"
-						icon={<DeleteIcon />}
-					/>
+					<IconButton size="lg" onClick={reset} aria-label="Settings" icon={<DeleteIcon />} />
 				</Center>
 			</Container>
 		</Box>
