@@ -6,7 +6,7 @@ import { ChevronLeftIcon } from '@chakra-ui/icons';
 
 export default function ConfigurationForm() {
 	const router = useRouter();
-	const [useLevels, setUseLevel] = useRecoilState(useLevelsState);
+	const [useLevels, setUseLevels] = useRecoilState(useLevelsState);
 	const [nrOfPlayersPerTeam, setNrOfPlayersPerTeam] = useRecoilState(nrOfPlayersPerTeamState);
 	const { colorMode, toggleColorMode } = useColorMode();
 
@@ -46,11 +46,7 @@ export default function ConfigurationForm() {
 						<FormLabel htmlFor="useLevels" mb="0">
 							Use level on players?
 						</FormLabel>
-						<Switch
-							isChecked={useLevels}
-							id="useLevels"
-							onChange={(event) => setUseLevel(event.target.value)}
-						/>
+						<Switch isChecked={useLevels} id="useLevels" onChange={(event) => setUseLevels(!useLevels)} />
 					</FormControl>
 
 					<FormControl display="flex" alignItems="center">
