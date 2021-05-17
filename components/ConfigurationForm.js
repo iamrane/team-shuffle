@@ -1,5 +1,5 @@
 import {useRouter} from "next/router";
-import {Box, Button, FormLabel, Heading, Stack, FormControl, Switch, Select} from "@chakra-ui/react";
+import {Box, Button, FormLabel, Heading, Stack, FormControl, Switch, Select, useColorMode} from "@chakra-ui/react";
 import {useRecoilState} from "recoil";
 import {Field, Form, Formik} from "formik";
 import {configurationState} from '../states';
@@ -7,14 +7,23 @@ import {configurationState} from '../states';
 export default function ConfigurationForm() {
     const router = useRouter();
     const [configuration, setConfiguration] = useRecoilState(configurationState);
+    const { colorMode, toggleColorMode } = useColorMode()
 
     return (
         <Formik
             onSubmit={values => {
-                setConfiguration(values);
+                if (values?.colorMode !== colorMode) {
+                    toggleColorMode();
+                }
+
+                setConfiguration({
+                    nrOfPlayersPerTeam: values?.nrOfPlayersPerTeam,
+                    useLevels: values?.useLevels,
+                });
+
                 router.back();
             }}
-            initialValues={configuration}
+            initialValues={{...configuration, colorMode}}
         >
             {() => (
                 <Form>
@@ -45,9 +54,20 @@ export default function ConfigurationForm() {
                                         </FormControl>
                                     )}
                                 </Field>
+                                <Field name="colorMode">
+                                    {({ field }) => (
+                                        <FormControl>
+                                            <FormLabel htmlFor="colorMode" mb={2}>Color mode</FormLabel>
+                                            <Select id="colorMode" {...field}>
+                                                <option value="dark">Dark</option>
+                                                <option value="light">Light</option>
+                                            </Select>
+                                        </FormControl>
+                                    )}
+                                </Field>
                             </Stack>
                         </Box>
-                        <Button colorScheme="cta" type="submit" size="lg">
+                        <Button colorScheme="primary" type="submit" size="lg">
                             Save
                         </Button>
                     </Stack>

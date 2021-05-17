@@ -117,10 +117,10 @@ export default function PlayerGroup({ group, editable }) {
                                             </Stack>
                                         </GridItem>
                                         <GridItem>
-                                            <Button colorScheme="cta" isFullWidth type="submit">Save</Button>
+                                            <Button colorScheme="primary" isFullWidth type="submit">Save</Button>
                                         </GridItem>
                                         <GridItem>
-                                            <Button colorScheme="cta" variant="outline" isFullWidth onClick={() => setInEdit(false)}>Cancel</Button>
+                                            <Button colorScheme="primary" variant="outline" isFullWidth onClick={() => setInEdit(false)}>Cancel</Button>
                                         </GridItem>
                                     </Grid>
                                 </Form>

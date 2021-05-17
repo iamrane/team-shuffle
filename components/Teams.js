@@ -24,7 +24,7 @@ export default function Teams() {
             <Stack spacing={10}>
                 <Stack spacing={4}>
                     <Button
-                        colorScheme="cta"
+                        colorScheme="primary"
                         size="lg"
                         alignSelf="start"
                         leftIcon={<ChevronLeftIcon />}
@@ -59,7 +59,7 @@ export default function Teams() {
                     ))}
                 </Stack>
                 <Button
-                    colorScheme="cta"
+                    colorScheme="primary"
                     size="lg"
                     onClick={shuffle}
                     leftIcon={<RepeatIcon />}
